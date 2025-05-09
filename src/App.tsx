@@ -7,7 +7,6 @@ import Home from './pages/Home';
 import Tollywood from './pages/Tollywood';
 import Tech from './pages/Tech';
 import About from './pages/About';
-import TailwindTest from './components/TailwindTest';
 
 // Wrapper component to access location for AnimatePresence
 const AnimatedRoutes = () => {
@@ -31,7 +30,6 @@ function App() {
       <Router>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <TailwindTest />
           <main className="flex-grow">
             <AnimatedRoutes />
           </main>
@@ -43,6 +41,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

@@ -7,61 +7,31 @@ interface LazyImageProps {
 }
 
 const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className = '' }) => {
-  const [imageSrc, setImageSrc] = useState<string>('');
-  const [imageRef, setImageRef] = useState<HTMLImageElement | null>(null);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
-    let observer: IntersectionObserver;
-    let didCancel = false;
-
-    if (imageRef && !isLoaded) {
-      if (IntersectionObserver) {
-        observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (
-                !didCancel &&
-                (entry.intersectionRatio > 0 || entry.isIntersecting)
-              ) {
-                setImageSrc(src);
-                observer.unobserve(imageRef);
-              }
-            });
-          },
-          {
-            threshold: 0.01,
-            rootMargin: '75%',
-          }
-        );
-        observer.observe(imageRef);
-      } else {
-        // Fallback for browsers that don't support IntersectionObserver
-        setImageSrc(src);
-      }
-    }
-
-    return () => {
-      didCancel = true;
-      if (observer && imageRef) {
-        observer.unobserve(imageRef);
-      }
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+      setImageSrc(src);
+      setIsLoaded(true);
     };
-  }, [src, imageRef, isLoaded]);
+  }, [src]);
 
   return (
-    <>
+    <div className={`relative ${className}`}>
       {!isLoaded && (
-        <div className={`${className} bg-gray-200 animate-pulse`}></div>
+        <div className="absolute inset-0 bg-neutral-200 animate-pulse rounded"></div>
       )}
-      <img
-        ref={setImageRef}
-        src={imageSrc}
-        alt={alt}
-        className={`${className} ${isLoaded ? 'block' : 'hidden'}`}
-        onLoad={() => setIsLoaded(true)}
-      />
-    </>
+      {imageSrc && (
+        <img
+          src={imageSrc}
+          alt={alt}
+          className={`${className} transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        />
+      )}
+    </div>
   );
 };
 

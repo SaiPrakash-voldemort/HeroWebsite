@@ -8,9 +8,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: #213547;
+  background-color: #f8fafc; /* Light background */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -22,6 +22,36 @@
   .container-custom {
     @apply container mx-auto px-4 sm:px-6 lg:px-8;
   }
+  
+  /* Highlight effects for buttons */
+  .btn-highlight {
+    @apply relative overflow-hidden transition-all duration-300 z-10 before:absolute before:inset-0 before:bg-white before:z-[-1] before:opacity-0 before:transition-opacity hover:before:opacity-20;
+  }
+  
+  /* Subtle background patterns */
+  .bg-pattern-light {
+    background-color: #f8fafc;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  @apply bg-pattern-light;
+}
+
+/* Glow effects for highlighted elements */
+.glow-hover {
+  @apply transition-all duration-300;
+}
+.glow-hover:hover {
+  @apply shadow-glow;
+}
+
+.glow-hover-warm:hover {
+  @apply shadow-glow-warm;
 }
 
 a {
@@ -31,14 +61,6 @@ a {
 }
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -77,5 +99,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
 
 
